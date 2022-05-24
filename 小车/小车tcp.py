@@ -40,9 +40,9 @@ class ListenSend:
     def train_callback(self, data):
         print('触发')
         p1 = multiprocessing.Process(self.sendinfo(data))
-        # p2 = multiprocessing.Process(self.recvdict())
+        p2 = multiprocessing.Process(self.recvdict())
         p1.start()
-        # p2.start()
+        p2.start()
 
     def sendinfo(self, data):
         # TCP发送
