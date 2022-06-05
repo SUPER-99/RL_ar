@@ -47,7 +47,7 @@ class ActorNode(nn.Module):
         position_sub = message_filters.Subscriber('/object_tracker/current_position', PositionMsg)
         scan_sub = message_filters.Subscriber('/scan', LaserScan)
         coord_sub = message_filters.Subscriber('camera_coord', String)
-        self.ts = message_filters.ApproximateTimeSynchronizer([im_sub, position_sub, coord_sub], 10, 0.1,
+        self.ts = message_filters.ApproximateTimeSynchronizer([im_sub, position_sub, coord_sub], 10, 0.01,
                                                               allow_headerless=True)
         self.ts.registerCallback(self.recipe_ready)
         self.optimize_ready_sub = rospy.Subscriber('/train/optimizeready', String, self.updatedict)
@@ -192,7 +192,7 @@ class ActorNode(nn.Module):
             self.twist.angular.z = self.a[0][1]
         self.cmd_vel_pub.publish(self.twist)
         
-        time.sleep(0.5)
+        time.sleep(0.3)
         self.twist.linear.x = 0
         self.twist.angular.z = self.a[0][1]
         # print(self.twist)
