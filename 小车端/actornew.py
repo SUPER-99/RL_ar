@@ -86,6 +86,7 @@ class ActorNode(nn.Module):
         self.angle = 0
         self.total_angle = 0
         self.g = 0
+        self.gcount = 0
 
     def recipe_ready(self, image_data, position_data, coord_data):
         # 根据当前时刻的信息去对上一时刻的状态动作做评估
@@ -162,10 +163,14 @@ class ActorNode(nn.Module):
             if self.store_count != 0:
                 r, self.g = reward.reward_sum()
                 # print('r=', r)
+                if self.g == 1:
+                    self.gcount += 1
+                elif self.g == 0:
+                    self.gcount = 0
                 info = {"storeTime": self.storeTime, "img": self.img_arr, "info": self.info_arr, "a": self.last_a,
                         "lastImg": self.last_img, "lastInfo": self.last_info, "r": r}
                 self.all_info[self.storeTime] = info
-                if self.store_count % 4 == 0 and self.store_count != 0:
+                if self.store_count % 4 == 0 and self.store_count != 0 and self.gcount < 5:
                     store_path = "{}{}.info".format(self.store_path, self.storeTime)
                     with open(store_path, "wb") as f:
                         pickle.dump(self.all_info, f)
