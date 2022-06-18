@@ -134,7 +134,7 @@ class TCP11:
 
         print('网络训练次数', self.lr_count)
         # 当网络进行了20次训练后，发给联邦服务器
-        if self.lr_count > 20:
+        if self.lr_count % 20 == 0 and self.lr_count != 0:
             self.send_dict_fl()
 
     def send_dict_fl(self):
