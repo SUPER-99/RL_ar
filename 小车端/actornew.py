@@ -105,7 +105,6 @@ class ActorNode(nn.Module):
             # 处理传感器信息
             self.last_img = self.img_arr
             self.last_info = self.info_arr
-            self.last_coord = self.coord
             self.last_a = self.a
     
             # 图像信息
