@@ -33,10 +33,10 @@ class camera():
         tcpPort2 = ('10.42.0.12', 7777)  # 小车12IP
         tcpPort4 = ('10.42.0.14', 7777)  # 小车14IP
 
-        # s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # s1.connect(tcpPort1)
+        s1.connect(tcpPort1)
         s2.connect(tcpPort2)
         s4.connect(tcpPort4)
         lserver.settimeout(0.05)
@@ -90,10 +90,10 @@ class camera():
 
                 print('发送')
                 data = str(Local).encode("utf-8")
-                # S1 = multiprocessing.Process(target=self.send(data, s1))
+                S1 = multiprocessing.Process(target=self.send(data, s1))
                 S2 = multiprocessing.Process(target=self.send(data, s2))
                 S4 = multiprocessing.Process(target=self.send(data, s4))
-                # S1.start()
+                S1.start()
                 S2.start()
                 S4.start()
                 Local = []
