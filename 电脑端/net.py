@@ -56,6 +56,9 @@ class ANet(nn.Module):
         self.lin1 = nn.Linear(64 * 5 + 64, a_dim)  # output(1, 2)
         # ---------------optimizer-----------
         self.optimizer = torch.optim.Adam(self.parameters(), lr=1e-4)
+        
+        # 初始化网络参数
+        # self.init_parameters()
 
     def forward(self, img, info):
 
@@ -85,6 +88,15 @@ class ANet(nn.Module):
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
+        
+    def init_parameters(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.Linear):
+                nn.init.normal_(m.weight, 0, 0.01)
+                nn.init.constant_(m.bias, 0)
 
 
 class CNet(nn.Module):
@@ -133,6 +145,9 @@ class CNet(nn.Module):
 
         # ---------------optimizer-----------
         self.optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
+        
+        # 初始化网络参数
+        # self.init_parameters()
 
     def forward(self, img, info, action):
         # to be modified
@@ -157,3 +172,12 @@ class CNet(nn.Module):
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
+        
+    def init_parameters(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.Linear):
+                nn.init.normal_(m.weight, 0, 0.01)
+                nn.init.constant_(m.bias, 0)
