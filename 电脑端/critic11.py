@@ -24,6 +24,9 @@ class CriticNode11(nn.Module):
         self.critic = CNet().to(device)
         self.critic_target = CNet().to(device)
         self.critic_target.load_state_dict(self.critic.state_dict())
+        # 要初始化网络，就注释掉load
+        # 若要在之前的dict上训练，就加上load
+        self.load("dict/dict11", "criticDict", "actorDict")
 
         self.discount = 0.99
         self.tau = 0.001
@@ -76,8 +79,7 @@ class CriticNode11(nn.Module):
 
         for param, target_param in zip(self.actor.parameters(), self.actor_target.parameters()):
             target_param.data.copy_(self.tau * param.data + (1 - self.tau) * target_param.data)
-
-        self.load("dict/dict11", "criticDict", "actorDict")
+            
 
     def load(self, directory, filenameC, filenameA):
         self.critic.load_state_dict(torch.load("{}/{}.dict".format(directory, filenameC), map_location=device))
