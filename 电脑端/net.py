@@ -57,8 +57,7 @@ class ANet(nn.Module):
         # ---------------optimizer-----------
         self.optimizer = torch.optim.Adam(self.parameters(), lr=1e-4)
         
-        # 初始化网络参数
-        # self.init_parameters()
+        self.init_parameters()
 
     def forward(self, img, info):
 
@@ -146,8 +145,7 @@ class CNet(nn.Module):
         # ---------------optimizer-----------
         self.optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
         
-        # 初始化网络参数
-        # self.init_parameters()
+        self.init_parameters()
 
     def forward(self, img, info, action):
         # to be modified
