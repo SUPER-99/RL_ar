@@ -26,7 +26,7 @@ class CriticNode11(nn.Module):
         self.critic_target.load_state_dict(self.critic.state_dict())
         # 要初始化网络，就注释掉load
         # 若要在之前的dict上训练，就加上load
-        self.load("dict/dict11", "criticDict", "actorDict")
+        # self.load("dict/dict11", "criticDict", "actorDict")
 
         self.discount = 0.99
         self.tau = 0.001
